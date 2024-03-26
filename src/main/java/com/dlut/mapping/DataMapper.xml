@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dlut.dao.DataMapper">
+  <resultMap id="BaseResultMap" type="com.dlut.pojo.Data">
+    <id column="data_id" jdbcType="INTEGER" property="dataId" />
+    <result column="data_name" jdbcType="VARCHAR" property="dataName" />
+    <result column="data_fileName" jdbcType="VARCHAR" property="dataFilename" />
+    <result column="data_city" jdbcType="VARCHAR" property="dataCity" />
+    <result column="data_describe" jdbcType="VARCHAR" property="dataDescribe" />
+    <result column="data_createTime" jdbcType="TIMESTAMP" property="dataCreatetime" />
+    <result column="data_createUser" jdbcType="VARCHAR" property="dataCreateuser" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="class_name" jdbcType="VARCHAR" property="className" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    data_id, data_name, data_fileName, data_city, data_describe, data_createTime, data_createUser, 
+    class_id, class_name
+  </sql>
+  <select id="selectByExample" parameterType="com.dlut.pojo.DataExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from data
+    where data_id = #{dataId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from data
+    where data_id = #{dataId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dlut.pojo.DataExample">
+    delete from data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dlut.pojo.Data">
+    insert into data (data_id, data_name, data_fileName, 
+      data_city, data_describe, data_createTime, 
+      data_createUser, class_id, class_name
+      )
+    values (#{dataId,jdbcType=INTEGER}, #{dataName,jdbcType=VARCHAR}, #{dataFilename,jdbcType=VARCHAR}, 
+      #{dataCity,jdbcType=VARCHAR}, #{dataDescribe,jdbcType=VARCHAR}, #{dataCreatetime,jdbcType=TIMESTAMP}, 
+      #{dataCreateuser,jdbcType=VARCHAR}, #{classId,jdbcType=INTEGER}, #{className,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dlut.pojo.Data">
+    insert into data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dataId != null">
+        data_id,
+      </if>
+      <if test="dataName != null">
+        data_name,
+      </if>
+      <if test="dataFilename != null">
+        data_fileName,
+      </if>
+      <if test="dataCity != null">
+        data_city,
+      </if>
+      <if test="dataDescribe != null">
+        data_describe,
+      </if>
+      <if test="dataCreatetime != null">
+        data_createTime,
+      </if>
+      <if test="dataCreateuser != null">
+        data_createUser,
+      </if>
+      <if test="classId != null">
+        class_id,
+      </if>
+      <if test="className != null">
+        class_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dataId != null">
+        #{dataId,jdbcType=INTEGER},
+      </if>
+      <if test="dataName != null">
+        #{dataName,jdbcType=VARCHAR},
+      </if>
+      <if test="dataFilename != null">
+        #{dataFilename,jdbcType=VARCHAR},
+      </if>
+      <if test="dataCity != null">
+        #{dataCity,jdbcType=VARCHAR},
+      </if>
+      <if test="dataDescribe != null">
+        #{dataDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="dataCreatetime != null">
+        #{dataCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataCreateuser != null">
+        #{dataCreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null">
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="className != null">
+        #{className,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dlut.pojo.DataExample" resultType="java.lang.Long">
+    select count(*) from data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update data
+    <set>
+      <if test="record.dataId != null">
+        data_id = #{record.dataId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dataName != null">
+        data_name = #{record.dataName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataFilename != null">
+        data_fileName = #{record.dataFilename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataCity != null">
+        data_city = #{record.dataCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataDescribe != null">
+        data_describe = #{record.dataDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataCreatetime != null">
+        data_createTime = #{record.dataCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dataCreateuser != null">
+        data_createUser = #{record.dataCreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classId != null">
+        class_id = #{record.classId,jdbcType=INTEGER},
+      </if>
+      <if test="record.className != null">
+        class_name = #{record.className,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update data
+    set data_id = #{record.dataId,jdbcType=INTEGER},
+      data_name = #{record.dataName,jdbcType=VARCHAR},
+      data_fileName = #{record.dataFilename,jdbcType=VARCHAR},
+      data_city = #{record.dataCity,jdbcType=VARCHAR},
+      data_describe = #{record.dataDescribe,jdbcType=VARCHAR},
+      data_createTime = #{record.dataCreatetime,jdbcType=TIMESTAMP},
+      data_createUser = #{record.dataCreateuser,jdbcType=VARCHAR},
+      class_id = #{record.classId,jdbcType=INTEGER},
+      class_name = #{record.className,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dlut.pojo.Data">
+    update data
+    <set>
+      <if test="dataName != null">
+        data_name = #{dataName,jdbcType=VARCHAR},
+      </if>
+      <if test="dataFilename != null">
+        data_fileName = #{dataFilename,jdbcType=VARCHAR},
+      </if>
+      <if test="dataCity != null">
+        data_city = #{dataCity,jdbcType=VARCHAR},
+      </if>
+      <if test="dataDescribe != null">
+        data_describe = #{dataDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="dataCreatetime != null">
+        data_createTime = #{dataCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataCreateuser != null">
+        data_createUser = #{dataCreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null">
+        class_id = #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="className != null">
+        class_name = #{className,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where data_id = #{dataId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dlut.pojo.Data">
+    update data
+    set data_name = #{dataName,jdbcType=VARCHAR},
+      data_fileName = #{dataFilename,jdbcType=VARCHAR},
+      data_city = #{dataCity,jdbcType=VARCHAR},
+      data_describe = #{dataDescribe,jdbcType=VARCHAR},
+      data_createTime = #{dataCreatetime,jdbcType=TIMESTAMP},
+      data_createUser = #{dataCreateuser,jdbcType=VARCHAR},
+      class_id = #{classId,jdbcType=INTEGER},
+      class_name = #{className,jdbcType=VARCHAR}
+    where data_id = #{dataId,jdbcType=INTEGER}
+  </update>
+</mapper>

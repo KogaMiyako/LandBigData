@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dlut.dao.PollutionMapper">
+  <resultMap id="BaseResultMap" type="com.dlut.pojo.Pollution">
+    <id column="pollution_id" jdbcType="INTEGER" property="pollutionId" />
+    <result column="pollution_name" jdbcType="VARCHAR" property="pollutionName" />
+    <result column="pollution_describe" jdbcType="VARCHAR" property="pollutionDescribe" />
+    <result column="Cr" jdbcType="INTEGER" property="cr" />
+    <result column="Ni" jdbcType="INTEGER" property="ni" />
+    <result column="Cu" jdbcType="INTEGER" property="cu" />
+    <result column="Zn" jdbcType="INTEGER" property="zn" />
+    <result column="As_" jdbcType="INTEGER" property="as" />
+    <result column="Cd" jdbcType="INTEGER" property="cd" />
+    <result column="Hg" jdbcType="INTEGER" property="hg" />
+    <result column="Pb" jdbcType="INTEGER" property="pb" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pollution_id, pollution_name, pollution_describe, Cr, Ni, Cu, Zn, As_, Cd, Hg, Pb
+  </sql>
+  <select id="selectByExample" parameterType="com.dlut.pojo.PollutionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from pollution
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pollution
+    where pollution_id = #{pollutionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pollution
+    where pollution_id = #{pollutionId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dlut.pojo.PollutionExample">
+    delete from pollution
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dlut.pojo.Pollution">
+    insert into pollution (pollution_id, pollution_name, pollution_describe, 
+      Cr, Ni, Cu, Zn, 
+      As_, Cd, Hg, Pb
+      )
+    values (#{pollutionId,jdbcType=INTEGER}, #{pollutionName,jdbcType=VARCHAR}, #{pollutionDescribe,jdbcType=VARCHAR}, 
+      #{cr,jdbcType=INTEGER}, #{ni,jdbcType=INTEGER}, #{cu,jdbcType=INTEGER}, #{zn,jdbcType=INTEGER}, 
+      #{as,jdbcType=INTEGER}, #{cd,jdbcType=INTEGER}, #{hg,jdbcType=INTEGER}, #{pb,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dlut.pojo.Pollution">
+    insert into pollution
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pollutionId != null">
+        pollution_id,
+      </if>
+      <if test="pollutionName != null">
+        pollution_name,
+      </if>
+      <if test="pollutionDescribe != null">
+        pollution_describe,
+      </if>
+      <if test="cr != null">
+        Cr,
+      </if>
+      <if test="ni != null">
+        Ni,
+      </if>
+      <if test="cu != null">
+        Cu,
+      </if>
+      <if test="zn != null">
+        Zn,
+      </if>
+      <if test="as != null">
+        As_,
+      </if>
+      <if test="cd != null">
+        Cd,
+      </if>
+      <if test="hg != null">
+        Hg,
+      </if>
+      <if test="pb != null">
+        Pb,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pollutionId != null">
+        #{pollutionId,jdbcType=INTEGER},
+      </if>
+      <if test="pollutionName != null">
+        #{pollutionName,jdbcType=VARCHAR},
+      </if>
+      <if test="pollutionDescribe != null">
+        #{pollutionDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="cr != null">
+        #{cr,jdbcType=INTEGER},
+      </if>
+      <if test="ni != null">
+        #{ni,jdbcType=INTEGER},
+      </if>
+      <if test="cu != null">
+        #{cu,jdbcType=INTEGER},
+      </if>
+      <if test="zn != null">
+        #{zn,jdbcType=INTEGER},
+      </if>
+      <if test="as != null">
+        #{as,jdbcType=INTEGER},
+      </if>
+      <if test="cd != null">
+        #{cd,jdbcType=INTEGER},
+      </if>
+      <if test="hg != null">
+        #{hg,jdbcType=INTEGER},
+      </if>
+      <if test="pb != null">
+        #{pb,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dlut.pojo.PollutionExample" resultType="java.lang.Long">
+    select count(*) from pollution
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pollution
+    <set>
+      <if test="record.pollutionId != null">
+        pollution_id = #{record.pollutionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pollutionName != null">
+        pollution_name = #{record.pollutionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pollutionDescribe != null">
+        pollution_describe = #{record.pollutionDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cr != null">
+        Cr = #{record.cr,jdbcType=INTEGER},
+      </if>
+      <if test="record.ni != null">
+        Ni = #{record.ni,jdbcType=INTEGER},
+      </if>
+      <if test="record.cu != null">
+        Cu = #{record.cu,jdbcType=INTEGER},
+      </if>
+      <if test="record.zn != null">
+        Zn = #{record.zn,jdbcType=INTEGER},
+      </if>
+      <if test="record.as != null">
+        As_ = #{record.as,jdbcType=INTEGER},
+      </if>
+      <if test="record.cd != null">
+        Cd = #{record.cd,jdbcType=INTEGER},
+      </if>
+      <if test="record.hg != null">
+        Hg = #{record.hg,jdbcType=INTEGER},
+      </if>
+      <if test="record.pb != null">
+        Pb = #{record.pb,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pollution
+    set pollution_id = #{record.pollutionId,jdbcType=INTEGER},
+      pollution_name = #{record.pollutionName,jdbcType=VARCHAR},
+      pollution_describe = #{record.pollutionDescribe,jdbcType=VARCHAR},
+      Cr = #{record.cr,jdbcType=INTEGER},
+      Ni = #{record.ni,jdbcType=INTEGER},
+      Cu = #{record.cu,jdbcType=INTEGER},
+      Zn = #{record.zn,jdbcType=INTEGER},
+      As_ = #{record.as,jdbcType=INTEGER},
+      Cd = #{record.cd,jdbcType=INTEGER},
+      Hg = #{record.hg,jdbcType=INTEGER},
+      Pb = #{record.pb,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dlut.pojo.Pollution">
+    update pollution
+    <set>
+      <if test="pollutionName != null">
+        pollution_name = #{pollutionName,jdbcType=VARCHAR},
+      </if>
+      <if test="pollutionDescribe != null">
+        pollution_describe = #{pollutionDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="cr != null">
+        Cr = #{cr,jdbcType=INTEGER},
+      </if>
+      <if test="ni != null">
+        Ni = #{ni,jdbcType=INTEGER},
+      </if>
+      <if test="cu != null">
+        Cu = #{cu,jdbcType=INTEGER},
+      </if>
+      <if test="zn != null">
+        Zn = #{zn,jdbcType=INTEGER},
+      </if>
+      <if test="as != null">
+        As_ = #{as,jdbcType=INTEGER},
+      </if>
+      <if test="cd != null">
+        Cd = #{cd,jdbcType=INTEGER},
+      </if>
+      <if test="hg != null">
+        Hg = #{hg,jdbcType=INTEGER},
+      </if>
+      <if test="pb != null">
+        Pb = #{pb,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pollution_id = #{pollutionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dlut.pojo.Pollution">
+    update pollution
+    set pollution_name = #{pollutionName,jdbcType=VARCHAR},
+      pollution_describe = #{pollutionDescribe,jdbcType=VARCHAR},
+      Cr = #{cr,jdbcType=INTEGER},
+      Ni = #{ni,jdbcType=INTEGER},
+      Cu = #{cu,jdbcType=INTEGER},
+      Zn = #{zn,jdbcType=INTEGER},
+      As_ = #{as,jdbcType=INTEGER},
+      Cd = #{cd,jdbcType=INTEGER},
+      Hg = #{hg,jdbcType=INTEGER},
+      Pb = #{pb,jdbcType=INTEGER}
+    where pollution_id = #{pollutionId,jdbcType=INTEGER}
+  </update>
+</mapper>

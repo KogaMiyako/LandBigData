@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dlut.dao.RuleMapper">
+  <resultMap id="BaseResultMap" type="com.dlut.pojo.Rule">
+    <id column="rule_id" jdbcType="INTEGER" property="ruleId" />
+    <result column="rule_num" jdbcType="INTEGER" property="ruleNum" />
+    <result column="rule_describe" jdbcType="VARCHAR" property="ruleDescribe" />
+    <result column="rule_type" jdbcType="INTEGER" property="ruleType" />
+    <result column="rule_pH_level" jdbcType="INTEGER" property="rulePhLevel" />
+    <result column="rule_crop_type" jdbcType="INTEGER" property="ruleCropType" />
+    <result column="rule_Cr" jdbcType="REAL" property="ruleCr" />
+    <result column="rule_Ni" jdbcType="REAL" property="ruleNi" />
+    <result column="rule_Cu" jdbcType="REAL" property="ruleCu" />
+    <result column="rule_Zn" jdbcType="REAL" property="ruleZn" />
+    <result column="rule_As" jdbcType="REAL" property="ruleAs" />
+    <result column="rule_Cd" jdbcType="REAL" property="ruleCd" />
+    <result column="rule_Hg" jdbcType="REAL" property="ruleHg" />
+    <result column="rule_Pb" jdbcType="REAL" property="rulePb" />
+    <result column="rule_laws_id" jdbcType="INTEGER" property="ruleLawsId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    rule_id, rule_num, rule_describe, rule_type, rule_pH_level, rule_crop_type, rule_Cr, 
+    rule_Ni, rule_Cu, rule_Zn, rule_As, rule_Cd, rule_Hg, rule_Pb, rule_laws_id
+  </sql>
+  <select id="selectByExample" parameterType="com.dlut.pojo.RuleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from rule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rule
+    where rule_id = #{ruleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rule
+    where rule_id = #{ruleId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dlut.pojo.RuleExample">
+    delete from rule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dlut.pojo.Rule">
+    insert into rule (rule_id, rule_num, rule_describe, 
+      rule_type, rule_pH_level, rule_crop_type, 
+      rule_Cr, rule_Ni, rule_Cu, rule_Zn, 
+      rule_As, rule_Cd, rule_Hg, rule_Pb, 
+      rule_laws_id)
+    values (#{ruleId,jdbcType=INTEGER}, #{ruleNum,jdbcType=INTEGER}, #{ruleDescribe,jdbcType=VARCHAR}, 
+      #{ruleType,jdbcType=INTEGER}, #{rulePhLevel,jdbcType=INTEGER}, #{ruleCropType,jdbcType=INTEGER}, 
+      #{ruleCr,jdbcType=REAL}, #{ruleNi,jdbcType=REAL}, #{ruleCu,jdbcType=REAL}, #{ruleZn,jdbcType=REAL}, 
+      #{ruleAs,jdbcType=REAL}, #{ruleCd,jdbcType=REAL}, #{ruleHg,jdbcType=REAL}, #{rulePb,jdbcType=REAL}, 
+      #{ruleLawsId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dlut.pojo.Rule">
+    insert into rule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ruleId != null">
+        rule_id,
+      </if>
+      <if test="ruleNum != null">
+        rule_num,
+      </if>
+      <if test="ruleDescribe != null">
+        rule_describe,
+      </if>
+      <if test="ruleType != null">
+        rule_type,
+      </if>
+      <if test="rulePhLevel != null">
+        rule_pH_level,
+      </if>
+      <if test="ruleCropType != null">
+        rule_crop_type,
+      </if>
+      <if test="ruleCr != null">
+        rule_Cr,
+      </if>
+      <if test="ruleNi != null">
+        rule_Ni,
+      </if>
+      <if test="ruleCu != null">
+        rule_Cu,
+      </if>
+      <if test="ruleZn != null">
+        rule_Zn,
+      </if>
+      <if test="ruleAs != null">
+        rule_As,
+      </if>
+      <if test="ruleCd != null">
+        rule_Cd,
+      </if>
+      <if test="ruleHg != null">
+        rule_Hg,
+      </if>
+      <if test="rulePb != null">
+        rule_Pb,
+      </if>
+      <if test="ruleLawsId != null">
+        rule_laws_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ruleId != null">
+        #{ruleId,jdbcType=INTEGER},
+      </if>
+      <if test="ruleNum != null">
+        #{ruleNum,jdbcType=INTEGER},
+      </if>
+      <if test="ruleDescribe != null">
+        #{ruleDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleType != null">
+        #{ruleType,jdbcType=INTEGER},
+      </if>
+      <if test="rulePhLevel != null">
+        #{rulePhLevel,jdbcType=INTEGER},
+      </if>
+      <if test="ruleCropType != null">
+        #{ruleCropType,jdbcType=INTEGER},
+      </if>
+      <if test="ruleCr != null">
+        #{ruleCr,jdbcType=REAL},
+      </if>
+      <if test="ruleNi != null">
+        #{ruleNi,jdbcType=REAL},
+      </if>
+      <if test="ruleCu != null">
+        #{ruleCu,jdbcType=REAL},
+      </if>
+      <if test="ruleZn != null">
+        #{ruleZn,jdbcType=REAL},
+      </if>
+      <if test="ruleAs != null">
+        #{ruleAs,jdbcType=REAL},
+      </if>
+      <if test="ruleCd != null">
+        #{ruleCd,jdbcType=REAL},
+      </if>
+      <if test="ruleHg != null">
+        #{ruleHg,jdbcType=REAL},
+      </if>
+      <if test="rulePb != null">
+        #{rulePb,jdbcType=REAL},
+      </if>
+      <if test="ruleLawsId != null">
+        #{ruleLawsId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dlut.pojo.RuleExample" resultType="java.lang.Long">
+    select count(*) from rule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rule
+    <set>
+      <if test="record.ruleId != null">
+        rule_id = #{record.ruleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ruleNum != null">
+        rule_num = #{record.ruleNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.ruleDescribe != null">
+        rule_describe = #{record.ruleDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ruleType != null">
+        rule_type = #{record.ruleType,jdbcType=INTEGER},
+      </if>
+      <if test="record.rulePhLevel != null">
+        rule_pH_level = #{record.rulePhLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.ruleCropType != null">
+        rule_crop_type = #{record.ruleCropType,jdbcType=INTEGER},
+      </if>
+      <if test="record.ruleCr != null">
+        rule_Cr = #{record.ruleCr,jdbcType=REAL},
+      </if>
+      <if test="record.ruleNi != null">
+        rule_Ni = #{record.ruleNi,jdbcType=REAL},
+      </if>
+      <if test="record.ruleCu != null">
+        rule_Cu = #{record.ruleCu,jdbcType=REAL},
+      </if>
+      <if test="record.ruleZn != null">
+        rule_Zn = #{record.ruleZn,jdbcType=REAL},
+      </if>
+      <if test="record.ruleAs != null">
+        rule_As = #{record.ruleAs,jdbcType=REAL},
+      </if>
+      <if test="record.ruleCd != null">
+        rule_Cd = #{record.ruleCd,jdbcType=REAL},
+      </if>
+      <if test="record.ruleHg != null">
+        rule_Hg = #{record.ruleHg,jdbcType=REAL},
+      </if>
+      <if test="record.rulePb != null">
+        rule_Pb = #{record.rulePb,jdbcType=REAL},
+      </if>
+      <if test="record.ruleLawsId != null">
+        rule_laws_id = #{record.ruleLawsId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rule
+    set rule_id = #{record.ruleId,jdbcType=INTEGER},
+      rule_num = #{record.ruleNum,jdbcType=INTEGER},
+      rule_describe = #{record.ruleDescribe,jdbcType=VARCHAR},
+      rule_type = #{record.ruleType,jdbcType=INTEGER},
+      rule_pH_level = #{record.rulePhLevel,jdbcType=INTEGER},
+      rule_crop_type = #{record.ruleCropType,jdbcType=INTEGER},
+      rule_Cr = #{record.ruleCr,jdbcType=REAL},
+      rule_Ni = #{record.ruleNi,jdbcType=REAL},
+      rule_Cu = #{record.ruleCu,jdbcType=REAL},
+      rule_Zn = #{record.ruleZn,jdbcType=REAL},
+      rule_As = #{record.ruleAs,jdbcType=REAL},
+      rule_Cd = #{record.ruleCd,jdbcType=REAL},
+      rule_Hg = #{record.ruleHg,jdbcType=REAL},
+      rule_Pb = #{record.rulePb,jdbcType=REAL},
+      rule_laws_id = #{record.ruleLawsId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dlut.pojo.Rule">
+    update rule
+    <set>
+      <if test="ruleNum != null">
+        rule_num = #{ruleNum,jdbcType=INTEGER},
+      </if>
+      <if test="ruleDescribe != null">
+        rule_describe = #{ruleDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleType != null">
+        rule_type = #{ruleType,jdbcType=INTEGER},
+      </if>
+      <if test="rulePhLevel != null">
+        rule_pH_level = #{rulePhLevel,jdbcType=INTEGER},
+      </if>
+      <if test="ruleCropType != null">
+        rule_crop_type = #{ruleCropType,jdbcType=INTEGER},
+      </if>
+      <if test="ruleCr != null">
+        rule_Cr = #{ruleCr,jdbcType=REAL},
+      </if>
+      <if test="ruleNi != null">
+        rule_Ni = #{ruleNi,jdbcType=REAL},
+      </if>
+      <if test="ruleCu != null">
+        rule_Cu = #{ruleCu,jdbcType=REAL},
+      </if>
+      <if test="ruleZn != null">
+        rule_Zn = #{ruleZn,jdbcType=REAL},
+      </if>
+      <if test="ruleAs != null">
+        rule_As = #{ruleAs,jdbcType=REAL},
+      </if>
+      <if test="ruleCd != null">
+        rule_Cd = #{ruleCd,jdbcType=REAL},
+      </if>
+      <if test="ruleHg != null">
+        rule_Hg = #{ruleHg,jdbcType=REAL},
+      </if>
+      <if test="rulePb != null">
+        rule_Pb = #{rulePb,jdbcType=REAL},
+      </if>
+      <if test="ruleLawsId != null">
+        rule_laws_id = #{ruleLawsId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where rule_id = #{ruleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dlut.pojo.Rule">
+    update rule
+    set rule_num = #{ruleNum,jdbcType=INTEGER},
+      rule_describe = #{ruleDescribe,jdbcType=VARCHAR},
+      rule_type = #{ruleType,jdbcType=INTEGER},
+      rule_pH_level = #{rulePhLevel,jdbcType=INTEGER},
+      rule_crop_type = #{ruleCropType,jdbcType=INTEGER},
+      rule_Cr = #{ruleCr,jdbcType=REAL},
+      rule_Ni = #{ruleNi,jdbcType=REAL},
+      rule_Cu = #{ruleCu,jdbcType=REAL},
+      rule_Zn = #{ruleZn,jdbcType=REAL},
+      rule_As = #{ruleAs,jdbcType=REAL},
+      rule_Cd = #{ruleCd,jdbcType=REAL},
+      rule_Hg = #{ruleHg,jdbcType=REAL},
+      rule_Pb = #{rulePb,jdbcType=REAL},
+      rule_laws_id = #{ruleLawsId,jdbcType=INTEGER}
+    where rule_id = #{ruleId,jdbcType=INTEGER}
+  </update>
+</mapper>
